@@ -4,6 +4,7 @@
  */
 package server;
 
+import server.utilities.ServerConfigurationProps;
 import java.awt.EventQueue;
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,21 +23,20 @@ public class LibraryTrackingServer {
     public LibraryTrackingServer() {
         initConfig();
     }
-    
+
     private void initConfig() {
         properties = new Properties();
         System.out.println("Reading server configuration.");
 
         try {
-            FileInputStream fileinputstream = new FileInputStream((new StringBuilder()).append("config").append(File.separator).append("server.configuration.props").toString());
+            fileInputStream = new FileInputStream((new StringBuilder()).append("config").append(File.separator).append("server").append(File.separator).append("server.configuration.props").toString());
         } catch (FileNotFoundException ex) {
-            System.out.println("Error in " + LibraryTrackingServer.class.getName() + ": " + ex.toString());
+            System.err.println("Error in " + LibraryTrackingServer.class.getName() + ": " + ex.toString());
             System.exit(1);
         }
-        
-        System.out.println("Loading server configuration.");
+
         serverConfigurationProps = new ServerConfigurationProps(properties);
-        
+
     }
 
     public static void main(String[] args) {
@@ -49,7 +49,7 @@ public class LibraryTrackingServer {
 
         });
     }
-    
+
     private Properties properties;
     private FileInputStream fileInputStream;
     private static ServerConfigurationProps serverConfigurationProps;

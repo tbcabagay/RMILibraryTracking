@@ -2,7 +2,7 @@
  * University Library, UP Los Banos
  * Computer Usage Tracking System
  */
-package server;
+package server.utilities;
 
 import java.util.Properties;
 
@@ -13,6 +13,8 @@ import java.util.Properties;
 public class ServerConfigurationProps {
 
     public ServerConfigurationProps(Properties properties) {
+        System.out.println("Loading server configuration.");
+
         DB_HOSTNAME = properties.getProperty("database.hostname");
         DB_PORT = properties.getProperty("database.port");
         DB_NAME = properties.getProperty("database.name");
