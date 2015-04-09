@@ -3,16 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package remote;
+package server.remote;
 
-import java.rmi.Remote;
-import java.rmi.RemoteException;
+import remote.LibraryTrackingServerRemote;
 
 /**
  *
  * @author tbcabagay
  */
-public interface ServerRemoteInterface extends Remote {
+public class ServerManager implements LibraryTrackingServerRemote {
 
-    String sayHello() throws RemoteException;
+    @Override
+    public String sayHello() {
+        return "Hello, World";
+    }
+    
 }

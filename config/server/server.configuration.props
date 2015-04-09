@@ -1,0 +1,11 @@
+# RMI settings
+remote.object.name=LibraryTracking
+server.rmi.port=9898
+server.name=winterfell.org
+
+# MySQL settings
+database.hostname=winterfell.org
+database.port=3306
+database.name=librarytracking
+database.username=root
+database.password=g3tsug4T3nsh0u

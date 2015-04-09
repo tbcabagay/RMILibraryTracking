@@ -9,7 +9,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import remote.ServerRemoteInterface;
+import remote.LibraryTrackingServerRemote;
 
 /**
  *
@@ -25,13 +25,15 @@ public class RemoteClientOperator {
     private void reLookUp() {
         try {
             registry = LocateRegistry.getRegistry("127.0.0.1");
-            serverRemoteInterface = (ServerRemoteInterface) registry.lookup("LibraryTracking");
+            stub = (LibraryTrackingServerRemote) registry.lookup("LibraryTracking");
+            String response = stub.sayHello();
+            System.out.println(response + " wahahaha");
         } catch (RemoteException | NotBoundException ex) {
             System.err.println("Error in " + RemoteClientOperator.class.getName() + ": " + ex.toString());
         }
     }
 
     private Registry registry;
-    private ServerRemoteInterface serverRemoteInterface;
+    private LibraryTrackingServerRemote stub;
 
 }

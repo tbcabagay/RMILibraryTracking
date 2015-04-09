@@ -4,15 +4,16 @@
  */
 package server;
 
+import remote.LibraryTrackingServerRemote;
+import server.remote.ServerManager;
 import server.utilities.ServerConfigurationProps;
 import java.awt.EventQueue;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -22,6 +23,7 @@ public class LibraryTrackingServer {
 
     public LibraryTrackingServer() {
         initConfig();
+        initRemoteConnection();
     }
 
     private void initConfig() {
@@ -30,12 +32,27 @@ public class LibraryTrackingServer {
 
         try {
             fileInputStream = new FileInputStream((new StringBuilder()).append("config").append(File.separator).append("server").append(File.separator).append("server.configuration.props").toString());
-        } catch (FileNotFoundException ex) {
+            properties.load(fileInputStream);
+        } catch (Exception ex) {
             System.err.println("Error in " + LibraryTrackingServer.class.getName() + ": " + ex.toString());
             System.exit(1);
         }
 
         serverConfigurationProps = new ServerConfigurationProps(properties);
+    }
+
+    private void initRemoteConnection() {
+        try {
+            serverManager = new ServerManager();
+            LibraryTrackingServerRemote stub = (LibraryTrackingServerRemote) UnicastRemoteObject.exportObject(serverManager, 0);
+
+            Registry registry = LocateRegistry.getRegistry();
+            registry.bind("LibraryTracking", stub);
+
+            System.out.println("Remote server ready.");
+        } catch (Exception ex) {
+            System.err.println("Error in " + LibraryTrackingServer.class.getName() + ": " + ex.toString());
+        }
 
     }
 
@@ -53,4 +70,5 @@ public class LibraryTrackingServer {
     private Properties properties;
     private FileInputStream fileInputStream;
     private static ServerConfigurationProps serverConfigurationProps;
+    private ServerManager serverManager;
 }
