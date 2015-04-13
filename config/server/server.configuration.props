@@ -4,7 +4,7 @@ server.rmi.port=9898
 server.name=winterfell.org
 
 # MySQL settings
-database.hostname=winterfell.org
+database.hostname=localhost
 database.port=3306
 database.name=librarytracking
 database.username=root

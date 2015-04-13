@@ -1,0 +1,3 @@
+grant codeBase "file:/home/tbcabagay/NetBeansProjects/RMILibraryTracking/build/classes/" {
+    permission java.security.AllPermission;
+};

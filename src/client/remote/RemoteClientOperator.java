@@ -5,8 +5,6 @@
  */
 package client.remote;
 
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import remote.LibraryTrackingServerRemote;
@@ -24,11 +22,11 @@ public class RemoteClientOperator {
 
     private void reLookUp() {
         try {
-            registry = LocateRegistry.getRegistry("127.0.0.1");
+            registry = LocateRegistry.getRegistry("127.0.0.1", 9898);
             stub = (LibraryTrackingServerRemote) registry.lookup("LibraryTracking");
             String response = stub.sayHello();
             System.out.println(response + " wahahaha");
-        } catch (RemoteException | NotBoundException ex) {
+        } catch (Exception ex) {
             System.err.println("Error in " + RemoteClientOperator.class.getName() + ": " + ex.toString());
         }
     }

@@ -13,7 +13,7 @@ import java.util.Properties;
 public class ServerConfigurationProps {
 
     public ServerConfigurationProps(Properties properties) {
-        System.out.println("Loading server configuration.");
+        System.out.print("Loading server configuration...");
 
         DB_HOSTNAME = properties.getProperty("database.hostname");
         DB_PORT = properties.getProperty("database.port");
@@ -24,6 +24,8 @@ public class ServerConfigurationProps {
         SERVER_ID = properties.getProperty("server.name");
         SERVER_PORT = properties.getProperty("server.rmi.port");
         REMOTE_OBJECT_NAME = properties.getProperty("remote.object.name");
+
+        System.out.println(" done.");
     }
 
     public static String DB_HOSTNAME;
