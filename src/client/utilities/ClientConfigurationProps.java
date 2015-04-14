@@ -15,6 +15,14 @@ public class ClientConfigurationProps {
 
     public ClientConfigurationProps(Properties properties) {
         System.out.println("Loading client configuration");
+        
+        SERVER_NAME = properties.getProperty("server.name");
+        SERVER_PORT = properties.getProperty("server.rmi.port");
+        REMOTE_OBJECT_NAME = properties.getProperty("remote.object.name");
     }
-    
+
+    public static String SERVER_NAME;
+    public static String SERVER_PORT;
+    public static String REMOTE_OBJECT_NAME;
+
 }

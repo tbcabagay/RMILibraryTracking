@@ -4,6 +4,7 @@
  */
 package client.gui;
 
+import client.remote.RemoteClientOperator;
 import client.utilities.UIGenHelper;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -49,11 +50,11 @@ public class LoginPanel extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        String student = studentField.getText();
-        String password = new String(passwordField.getPassword());
+        String student = studentField.getText().trim();
+        String password = new String(passwordField.getPassword()).trim();
 
         if (validateForm(student, password)) {
-
+            String response = RemoteClientOperator.requestLogin(student, password);
         }
     }
 

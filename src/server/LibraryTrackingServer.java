@@ -58,9 +58,9 @@ public class LibraryTrackingServer {
         try {
             System.out.print("Starting remote server...");
             serverManager = new ServerManager();
-            LibraryTrackingServerRemote stub = (LibraryTrackingServerRemote) UnicastRemoteObject.exportObject(serverManager, 9898);
+            LibraryTrackingServerRemote stub = (LibraryTrackingServerRemote) UnicastRemoteObject.exportObject(serverManager, 0);
 
-            Registry registry = LocateRegistry.getRegistry();
+            Registry registry = LocateRegistry.getRegistry(ServerConfigurationProps.SERVER_NAME, Integer.parseInt(ServerConfigurationProps.SERVER_PORT));
             registry.rebind(ServerConfigurationProps.REMOTE_OBJECT_NAME, stub);
             System.out.println(" done.");
         } catch (Exception ex) {

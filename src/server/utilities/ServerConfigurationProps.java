@@ -21,7 +21,7 @@ public class ServerConfigurationProps {
         DB_USERNAME = properties.getProperty("database.username");
         DB_PASSWORD = properties.getProperty("database.password");
 
-        SERVER_ID = properties.getProperty("server.name");
+        SERVER_NAME = properties.getProperty("server.name");
         SERVER_PORT = properties.getProperty("server.rmi.port");
         REMOTE_OBJECT_NAME = properties.getProperty("remote.object.name");
 
@@ -33,7 +33,7 @@ public class ServerConfigurationProps {
     public static String DB_NAME;
     public static String DB_USERNAME;
     public static String DB_PASSWORD;
-    public static String SERVER_ID;
+    public static String SERVER_NAME;
     public static String SERVER_PORT;
     public static String REMOTE_OBJECT_NAME;
 }

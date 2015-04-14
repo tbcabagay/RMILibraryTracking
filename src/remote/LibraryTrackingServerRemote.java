@@ -12,8 +12,8 @@ import java.rmi.RemoteException;
  *
  * @author tbcabagay
  */
-public interface LibraryTrackingServerRemote extends Remote {
+public abstract interface LibraryTrackingServerRemote extends Remote {
 
-    String sayHello() throws RemoteException;
+    public abstract boolean doLogin(String username, String password) throws RemoteException;
 
 }

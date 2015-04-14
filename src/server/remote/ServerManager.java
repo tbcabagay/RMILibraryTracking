@@ -14,8 +14,8 @@ import remote.LibraryTrackingServerRemote;
 public class ServerManager implements LibraryTrackingServerRemote {
 
     @Override
-    public String sayHello() {
-        return "Hello, World";
+    public boolean doLogin(String username, String password) {
+        
     }
     
 }

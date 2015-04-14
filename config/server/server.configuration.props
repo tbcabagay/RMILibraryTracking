@@ -1,7 +1,7 @@
 # RMI settings
 remote.object.name=LibraryTracking
 server.rmi.port=9898
-server.name=winterfell.org
+server.name=localhost
 
 # MySQL settings
 database.hostname=localhost

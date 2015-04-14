@@ -5,6 +5,7 @@
  */
 package client.remote;
 
+import client.utilities.ClientConfigurationProps;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import remote.LibraryTrackingServerRemote;
@@ -20,12 +21,12 @@ public class RemoteClientOperator {
         reLookUp();
     }
 
+    public 
+    
     private void reLookUp() {
         try {
-            registry = LocateRegistry.getRegistry("127.0.0.1", 9898);
-            stub = (LibraryTrackingServerRemote) registry.lookup("LibraryTracking");
-            String response = stub.sayHello();
-            System.out.println(response + " wahahaha");
+            registry = LocateRegistry.getRegistry(ClientConfigurationProps.SERVER_NAME, Integer.parseInt(ClientConfigurationProps.SERVER_PORT));
+            stub = (LibraryTrackingServerRemote) registry.lookup(ClientConfigurationProps.REMOTE_OBJECT_NAME);
         } catch (Exception ex) {
             System.err.println("Error in " + RemoteClientOperator.class.getName() + ": " + ex.toString());
         }

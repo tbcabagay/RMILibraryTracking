@@ -1,0 +1,4 @@
+# RMI settings
+remote.object.name=LibraryTracking
+server.rmi.port=9898
+server.name=localhost
