@@ -54,7 +54,8 @@ public class LoginPanel extends JPanel implements ActionListener {
         String password = new String(passwordField.getPassword()).trim();
 
         if (validateForm(student, password)) {
-            String response = RemoteClientOperator.requestLogin(student, password);
+            boolean response = RemoteClientOperator.requestLogin(student, password);
+            System.out.println(response);
         }
     }
 

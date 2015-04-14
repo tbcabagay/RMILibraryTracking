@@ -16,34 +16,37 @@ import server.utilities.ServerConfigurationProps;
 public class DatabaseConnection {
 
     public DatabaseConnection() {
-        this.username = ServerConfigurationProps.DB_USERNAME;
-        this.password = ServerConfigurationProps.DB_PASSWORD;
-        this.hostname = ServerConfigurationProps.DB_HOSTNAME;
-        this.port = ServerConfigurationProps.DB_PORT;
-        this.name = ServerConfigurationProps.DB_NAME;
-        this.connection = null;
+        username = ServerConfigurationProps.DB_USERNAME;
+        password = ServerConfigurationProps.DB_PASSWORD;
+        hostname = ServerConfigurationProps.DB_HOSTNAME;
+        port = ServerConfigurationProps.DB_PORT;
+        name = ServerConfigurationProps.DB_NAME;
+        connection = null;
 
-        String connectionURL = "jdbc:mysql://" + this.hostname + ":" + this.port + "/" + this.name;
+        String connectionURL = "jdbc:mysql://" + hostname + ":" + port + "/" + name;
 
         try {
             System.out.print("Loading database connection...");
             Class.forName("com.mysql.jdbc.Driver");
-            this.connection = DriverManager.getConnection(connectionURL, this.username, this.password);
+            connection = DriverManager.getConnection(connectionURL, username, password);
             System.out.println(" done.");
         } catch (Exception ex) {
             System.err.println("Error in " + DatabaseConnection.class.getName() + ": " + ex.toString());
             System.exit(1);
         }
+
+        System.out.println("Initializing models...");
+        Student student = new Student();
     }
 
-    public Connection getConnection() {
+    public static Connection getConnection() {
         return connection;
     }
 
-    private String username;
-    private String password;
-    private String hostname;
-    private String port;
-    private String name;
-    private Connection connection;
+    private static String username;
+    private static String password;
+    private static String hostname;
+    private static String port;
+    private static String name;
+    private static Connection connection;
 }

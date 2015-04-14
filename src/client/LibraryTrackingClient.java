@@ -47,10 +47,10 @@ public class LibraryTrackingClient {
             System.exit(1);
         }
 
-        clientConfigurationProps = new ClientConfigurationProps(properties);
+        ClientConfigurationProps clientConfigurationProps = new ClientConfigurationProps(properties);
         
         System.out.println("Initializing remote connection.");
-        remoteClientOperator = new RemoteClientOperator();
+        RemoteClientOperator remoteClientOperator = new RemoteClientOperator();
     }
 
     public static void main(String[] args) {
@@ -65,6 +65,4 @@ public class LibraryTrackingClient {
     private final MainFrame mainFrame;
     private Properties properties;
     private FileInputStream fileInputStream;
-    private static ClientConfigurationProps clientConfigurationProps;
-    private RemoteClientOperator remoteClientOperator;
 }

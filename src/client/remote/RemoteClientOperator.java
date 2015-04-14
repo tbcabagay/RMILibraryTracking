@@ -21,18 +21,28 @@ public class RemoteClientOperator {
         reLookUp();
     }
 
-    public 
-    
-    private void reLookUp() {
+    public static boolean requestLogin(String username, String password) {
         try {
-            registry = LocateRegistry.getRegistry(ClientConfigurationProps.SERVER_NAME, Integer.parseInt(ClientConfigurationProps.SERVER_PORT));
-            stub = (LibraryTrackingServerRemote) registry.lookup(ClientConfigurationProps.REMOTE_OBJECT_NAME);
+            if (stub.doLogin(username, password)) {
+                return true;
+            }
         } catch (Exception ex) {
             System.err.println("Error in " + RemoteClientOperator.class.getName() + ": " + ex.toString());
         }
+        return false;
     }
 
-    private Registry registry;
-    private LibraryTrackingServerRemote stub;
+    private void reLookUp() {
+        try {
+            registry = LocateRegistry.getRegistry(ClientConfigurationProps.SERVER_NAME, ClientConfigurationProps.SERVER_PORT);
+            stub = (LibraryTrackingServerRemote) registry.lookup(ClientConfigurationProps.REMOTE_OBJECT_NAME);
+        } catch (Exception ex) {
+            System.err.println("Error in asd" + RemoteClientOperator.class.getName() + ": " + ex.toString());
+            ex.printStackTrace();
+        }
+    }
+
+    private static Registry registry;
+    private static LibraryTrackingServerRemote stub;
 
 }

@@ -6,6 +6,7 @@
 package server.remote;
 
 import remote.LibraryTrackingServerRemote;
+import server.database.Student;
 
 /**
  *
@@ -15,7 +16,7 @@ public class ServerManager implements LibraryTrackingServerRemote {
 
     @Override
     public boolean doLogin(String username, String password) {
-        
+        return Student.checkLogin(username, password);
     }
     
 }
