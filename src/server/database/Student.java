@@ -8,7 +8,6 @@ package server.database;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 
 /**
  *
@@ -25,7 +24,7 @@ public class Student {
         boolean result = false;
 
         try {
-            String query = "SELECT number FROM `" + tableName + "` WHERE `number` = ?;";
+            String query = "SELECT number FROM `" + tableName + "` WHERE `number` = ?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, username);
