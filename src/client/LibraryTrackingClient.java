@@ -24,13 +24,17 @@ public class LibraryTrackingClient {
         GraphicsEnvironment myEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
         myDevice = myEnvironment.getDefaultScreenDevice();
 
-        mainFrame = new MainFrame();
-
-        try {
-            myDevice.setFullScreenWindow(mainFrame);
-        } finally {
-            myDevice.setFullScreenWindow(null);
-        }
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                mainFrame = new MainFrame();
+                myDevice.setFullScreenWindow(mainFrame);
+                /*try {
+                    myDevice.setFullScreenWindow(mainFrame);
+                } finally {
+                    myDevice.setFullScreenWindow(null);
+                }*/
+            }
+        });
 
         initConfig();
     }
@@ -48,21 +52,21 @@ public class LibraryTrackingClient {
         }
 
         ClientConfigurationProps clientConfigurationProps = new ClientConfigurationProps(properties);
-        
+
         System.out.println("Initializing remote connection.");
         RemoteClientOperator remoteClientOperator = new RemoteClientOperator();
     }
 
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new LibraryTrackingClient();
-            }
-        });
+    public static GraphicsDevice getMyDevice() {
+        return myDevice;
     }
 
-    private final GraphicsDevice myDevice;
-    private final MainFrame mainFrame;
+    public static void main(String[] args) {
+        new LibraryTrackingClient();
+    }
+
+    private static GraphicsDevice myDevice;
+    private MainFrame mainFrame;
     private Properties properties;
     private FileInputStream fileInputStream;
 }
