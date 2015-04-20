@@ -7,6 +7,7 @@ package client.gui;
 import client.LibraryTrackingClient;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.GraphicsDevice;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
@@ -31,7 +32,7 @@ public class MainFrame extends JFrame implements WindowListener, WindowFocusList
         addWindowFocusListener(this);
         addWindowListener(this);
 
-        myDevice = LibraryTrackingClient.getMyDevice();
+        this.myDevice = LibraryTrackingClient.getMyDevice();
 
         initComponents();
     }
@@ -42,88 +43,97 @@ public class MainFrame extends JFrame implements WindowListener, WindowFocusList
         add(loginPanel, BorderLayout.EAST);
     }
 
-    public void windowGainedFocus(WindowEvent windowevent) {
-        setVisible(true);
-        requestFocus();
-        setExtendedState(6);
-        setExtendedState(204);
-        myDevice.setFullScreenWindow(this);
-    }
-
-    public void windowLostFocus(WindowEvent windowevent) {
-        setVisible(true);
-        requestFocus();
-        setExtendedState(204);
-        setExtendedState(6);
-        myDevice.setFullScreenWindow(this);
-    }
-
-    public void windowActivated(WindowEvent windowevent) {
-        addNotify();
-        toFront();
-        requestFocus();
-        myDevice.setFullScreenWindow(this);
-        setExtendedState(204);
-        setExtendedState(6);
-    }
-
-    public void windowClosed(WindowEvent windowevent) {
-        setVisible(true);
-        addNotify();
-        toFront();
-        requestFocus();
-        myDevice.setFullScreenWindow(this);
-        setExtendedState(204);
-        setExtendedState(6);
-    }
-
-    public void windowClosing(WindowEvent windowevent) {
-        setVisible(true);
-        addNotify();
-        toFront();
-        requestFocus();
-        myDevice.setFullScreenWindow(this);
-        setExtendedState(204);
-        setExtendedState(6);
-    }
-
-    public void windowDeactivated(WindowEvent windowevent) {
-        setVisible(true);
-        addNotify();
-        toFront();
-        requestFocus();
-        myDevice.setFullScreenWindow(this);
-        setExtendedState(204);
-        setExtendedState(6);
-    }
-
-    public void windowDeiconified(WindowEvent windowevent) {
-        setVisible(true);
-        addNotify();
-        toFront();
-        requestFocus();
-        myDevice.setFullScreenWindow(this);
-        setExtendedState(204);
-        setExtendedState(6);
-    }
-
-    public void windowIconified(WindowEvent windowevent) {
-        setVisible(true);
-        addNotify();
-        toFront();
-        requestFocus();
-        myDevice.setFullScreenWindow(this);
-        setExtendedState(204);
-        setExtendedState(6);
-    }
-
-    public void windowOpened(WindowEvent windowevent) {
-        myDevice.setFullScreenWindow(this);
-        setExtendedState(204);
-        setExtendedState(6);
-    }
-
     private GraphicsDevice myDevice;
     private final Dimension screenSize;
     private LoginPanel loginPanel;
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+        myDevice.setFullScreenWindow(this);
+        setExtendedState(WindowEvent.WINDOW_DEICONIFIED);
+        setExtendedState(Frame.MAXIMIZED_BOTH);
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        setVisible(true);
+        addNotify();
+        toFront();
+        requestFocus();
+        myDevice.setFullScreenWindow(this);
+        setExtendedState(WindowEvent.WINDOW_DEICONIFIED);
+        setExtendedState(Frame.MAXIMIZED_BOTH);
+        
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+        setVisible(true);
+        addNotify();
+        toFront();
+        requestFocus();
+        myDevice.setFullScreenWindow(this);
+        setExtendedState(WindowEvent.WINDOW_DEICONIFIED);
+        setExtendedState(Frame.MAXIMIZED_BOTH);
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+        setVisible(true);
+        addNotify();
+        toFront();
+        requestFocus();
+        myDevice.setFullScreenWindow(this);
+        setExtendedState(WindowEvent.WINDOW_DEICONIFIED);
+        setExtendedState(Frame.MAXIMIZED_BOTH);
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+        setVisible(true);
+        addNotify();
+        toFront();
+        requestFocus();
+        myDevice.setFullScreenWindow(this);
+        setExtendedState(WindowEvent.WINDOW_DEICONIFIED);
+        setExtendedState(Frame.MAXIMIZED_BOTH);
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+        addNotify();
+        toFront();
+        requestFocus();
+        myDevice.setFullScreenWindow(this);
+        setExtendedState(WindowEvent.WINDOW_DEICONIFIED);
+        setExtendedState(Frame.MAXIMIZED_BOTH);
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+        setVisible(true);
+        addNotify();
+        toFront();
+        requestFocus();
+        myDevice.setFullScreenWindow(this);
+        setExtendedState(WindowEvent.WINDOW_DEICONIFIED);
+        setExtendedState(Frame.MAXIMIZED_BOTH);
+    }
+
+    @Override
+    public void windowGainedFocus(WindowEvent e) {
+        setVisible(true);
+        requestFocus();
+        setExtendedState(Frame.MAXIMIZED_BOTH);
+        setExtendedState(WindowEvent.WINDOW_DEICONIFIED);
+        myDevice.setFullScreenWindow(this);
+    }
+
+    @Override
+    public void windowLostFocus(WindowEvent e) {
+        setVisible(true);
+        requestFocus();
+        setExtendedState(WindowEvent.WINDOW_DEICONIFIED);
+        setExtendedState(Frame.MAXIMIZED_BOTH);
+    }
 }

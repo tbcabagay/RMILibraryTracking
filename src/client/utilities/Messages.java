@@ -22,6 +22,7 @@ public class Messages {
         message.put("studentfield_error", "Student ID is required.");
         message.put("passwordfield_error", "Password is required.");
         message.put("studentpasswordfield_error", "Student ID and Password are required.");
+        message.put("login_error", "Unable to login. Please check if your username and password are correct.");
     }
 
     public String getMessage(String key) {

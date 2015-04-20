@@ -4,6 +4,7 @@
  */
 package client.gui;
 
+import client.LibraryTrackingClient;
 import client.remote.RemoteClientOperator;
 import client.utilities.UIGenHelper;
 import java.awt.GridBagConstraints;
@@ -55,7 +56,11 @@ public class LoginPanel extends JPanel implements ActionListener {
 
         if (validateForm(student, password)) {
             boolean response = RemoteClientOperator.requestLogin(student, password);
-            System.out.println(response);
+            if(response) {
+                LibraryTrackingClient.showTimerFrame(student);
+            } else {
+                JOptionPane.showMessageDialog(null, message.getMessage("login_error"), "Warning", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 
