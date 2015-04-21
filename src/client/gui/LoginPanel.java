@@ -26,11 +26,12 @@ import client.utilities.Messages;
 public class LoginPanel extends JPanel implements ActionListener {
 
     public LoginPanel() {
-        setLayout(new GridBagLayout());
         initComponents();
     }
 
     private void initComponents() {
+        setLayout(new GridBagLayout());
+
         studentLabel = new JLabel("Student ID");
         passwordLabel = new JLabel("Password");
         studentField = new JTextField(10);
@@ -56,7 +57,7 @@ public class LoginPanel extends JPanel implements ActionListener {
 
         if (validateForm(student, password)) {
             boolean response = RemoteClientOperator.requestLogin(student, password);
-            if(response) {
+            if (response) {
                 LibraryTrackingClient.showTimerFrame(student);
             } else {
                 JOptionPane.showMessageDialog(null, message.getMessage("login_error"), "Warning", JOptionPane.ERROR_MESSAGE);
