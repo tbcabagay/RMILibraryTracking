@@ -5,7 +5,9 @@
  */
 package client.gui;
 
+import client.utilities.UIGenHelper;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -41,6 +43,12 @@ public class AlertDialog extends JDialog implements ActionListener {
         messageLabel = new JLabel("", new ImageIcon((new StringBuilder()).append("images").append(File.separator).append("timer-icon.png").toString()), 0);
         continueButton = new JButton("Continue");
         logoutButton = new JButton("Logout");
+        
+        UIGenHelper.addToGrid(container, messageLabel, 0, 0, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE);
+        UIGenHelper.addToGrid(container, continueButton, 0, 1, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE);
+        UIGenHelper.addToGrid(container, logoutButton, 1, 1, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE);
+        getContentPane().add(container);
+        pack();
 
         continueButton.addActionListener(this);
         logoutButton.addActionListener(this);
