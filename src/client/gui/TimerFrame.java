@@ -5,8 +5,11 @@
  */
 package client.gui;
 
+import client.LibraryTrackingClient;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Frame;
+import java.awt.GraphicsDevice;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,6 +32,7 @@ public class TimerFrame extends JFrame implements ActionListener, WindowListener
         this.minutes = 0;
         this.hours = 0;
         this.timerCounter = new Timer(60000, this);
+        this.student = "";
 
         initComponents();
     }
@@ -45,7 +49,7 @@ public class TimerFrame extends JFrame implements ActionListener, WindowListener
 
         timerDisplayPanel.setTimerText((new StringBuilder()).append(hours).append(":").append(minutes).toString());
         setTitle((new StringBuilder()).append("Time> ").append(hours).append(":").append(minutes).toString());
-        this.alertDialog = new AlertDialog(this);
+        alertDialog = new AlertDialog(this);
 
         container.add(timerDisplayPanel);
 
@@ -55,16 +59,20 @@ public class TimerFrame extends JFrame implements ActionListener, WindowListener
 
     public static void autoLogoff() {
         /*String s = RemoteClientOperator.requestLogout(userId);
-        if (s.equals("true")) {
-            ClientOpMain.setSessionMsg((new StringBuilder()).append("Last Session Duration:").append(getTimeDuration()).toString());
-            ClientOpMain.showEntryWindow();
-        } else {
-            ClientOpMain.setSessionMsg((new StringBuilder()).append("Last Session Duration: ").append(getTimeDuration()).append("Error:").append(s).toString());
-            ClientOpMain.showEntryWindow();
-        }*/
+         if (s.equals("true")) {
+         ClientOpMain.setSessionMsg((new StringBuilder()).append("Last Session Duration:").append(getTimeDuration()).toString());
+         ClientOpMain.showEntryWindow();
+         } else {
+         ClientOpMain.setSessionMsg((new StringBuilder()).append("Last Session Duration: ").append(getTimeDuration()).append("Error:").append(s).toString());
+         ClientOpMain.showEntryWindow();
+         }*/
+    }
+    
+    public void startMinuteCounter() {
+        timerCounter.start();
     }
 
-    public void setRegid(boolean flag) {
+    public void setFrameRegisterID(boolean flag) {
         if (flag) {
             addWindowListener(this);
             addWindowFocusListener(this);
@@ -78,65 +86,141 @@ public class TimerFrame extends JFrame implements ActionListener, WindowListener
         minutes = 0;
         hours = 0;
         //timerDisplay.setTimerText("");
-        userId = "";
+        student = "";
         setTitle((new StringBuilder()).append("Time> ").append(hours).append(":").append(minutes).toString());
         //alertDialog.setVisible(false);
     }
 
+    public String getStudentNumber() {
+        return student;
+    }
+
+    public void setStudentNumber(String student) {
+        this.student = student;
+        timerDisplayPanel.setStudentNumber(student);
+    }
+
+    public int getMinutes() {
+        return minutes;
+    }
+
+    public void setMinutes(int minutes) {
+        this.minutes = minutes;
+    }
+
+    public int getHours() {
+        return hours;
+    }
+
+    public void setHours(int hours) {
+        this.hours = hours;
+    }
+
+    public int getAlertMinutes() {
+        return alertMinutes;
+    }
+
+    public void setAlertMinutes(int alertMinutes) {
+        this.alertMinutes = alertMinutes;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        minutes++;
+        if(minutes >= 60)
+        {
+            minutes = 0;
+            hours++;
+        }
+        timerDisplayPanel.setTimerText((new StringBuilder()).append(hours).append(":").append(minutes).toString());
+        if(minutes >= alertMinutes - 1)
+        {
+            double d = minutes % (alertMinutes - 1);
+            if(d == 0.0D)
+            {
+                GraphicsDevice graphicsdevice = LibraryTrackingClient.getMyDevice();
+                alertDialog.setMessage((new StringBuilder()).append("1 minute to").append(" ").append(hours).append(":").append(minutes + 1).toString());
+                alertDialog.setVisible(true);
+                graphicsdevice.setFullScreenWindow(alertDialog);
+                graphicsdevice.setFullScreenWindow(null);
+            }
+        }
+        setTitle((new StringBuilder()).append("Time> ").append(hours).append(":").append(minutes).toString());
     }
 
     @Override
     public void windowOpened(WindowEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(!isVisible()) {
+            setVisible(true);
+            requestFocusInWindow();
+        }
+        setExtendedState(WindowEvent.WINDOW_DEICONIFIED);
     }
 
     @Override
     public void windowClosing(WindowEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        setVisible(true);
+        requestFocusInWindow();
     }
 
     @Override
     public void windowClosed(WindowEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        setVisible(true);
+        requestFocusInWindow();
+        setExtendedState(Frame.NORMAL);
     }
 
     @Override
     public void windowIconified(WindowEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        setVisible(true);
+        setExtendedState(Frame.NORMAL);
+        addNotify();
+        requestFocusInWindow();
     }
 
     @Override
     public void windowDeiconified(WindowEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        setExtendedState(Frame.NORMAL);
+        addNotify();
+        requestFocus();
     }
 
     @Override
     public void windowActivated(WindowEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        setVisible(true);
+        setExtendedState(WindowEvent.WINDOW_DEICONIFIED);
+        requestFocus();
     }
 
     @Override
     public void windowDeactivated(WindowEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(!isVisible()) {
+            setVisible(true);
+            requestFocus();
+        }
+        setExtendedState(Frame.NORMAL);
     }
 
     @Override
     public void windowGainedFocus(WindowEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(!isVisible()) {
+            setVisible(true);
+            setExtendedState(WindowEvent.WINDOW_DEICONIFIED);
+        }
     }
 
     @Override
     public void windowLostFocus(WindowEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(!isVisible()) {
+            setVisible(true);
+        }
+        setExtendedState(Frame.NORMAL);
     }
 
-    private static String userId;
+    private String student;
     private int minutes;
     private int hours;
-    private int alertMins;
+    private int alertMinutes;
     private final Timer timerCounter;
     private final Dimension screenSize;
     private TimerDisplayPanel timerDisplayPanel;

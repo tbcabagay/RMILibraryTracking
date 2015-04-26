@@ -26,7 +26,7 @@ import javax.swing.JPanel;
 public class AlertDialog extends JDialog implements ActionListener {
 
     public AlertDialog(TimerFrame timerFrame) {
-        AlertDialog.timeFrame = timerFrame;
+        AlertDialog.timerFrame = timerFrame;
 
         initComponents();
     }
@@ -43,15 +43,20 @@ public class AlertDialog extends JDialog implements ActionListener {
         messageLabel = new JLabel("", new ImageIcon((new StringBuilder()).append("images").append(File.separator).append("timer-icon.png").toString()), 0);
         continueButton = new JButton("Continue");
         logoutButton = new JButton("Logout");
-        
+
         UIGenHelper.addToGrid(container, messageLabel, 0, 0, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE);
         UIGenHelper.addToGrid(container, continueButton, 0, 1, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE);
         UIGenHelper.addToGrid(container, logoutButton, 1, 1, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE);
         getContentPane().add(container);
-        pack();
+        // pack();
 
         continueButton.addActionListener(this);
         logoutButton.addActionListener(this);
+    }
+
+    public void setMessage(String message) {
+        messageLabel.setText(message);
+        pack();
     }
 
     @Override
@@ -65,9 +70,8 @@ public class AlertDialog extends JDialog implements ActionListener {
         }
     }
 
-    private String message = "";
     private JLabel messageLabel;
-    private static TimerFrame timeFrame;
+    private static TimerFrame timerFrame;
     private JButton continueButton;
     private JButton logoutButton;
 }

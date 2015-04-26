@@ -4,7 +4,6 @@ import client.gui.MainFrame;
 import client.gui.TimerFrame;
 import client.remote.RemoteClientOperator;
 import client.utilities.ClientConfigurationProps;
-import java.awt.EventQueue;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.io.File;
@@ -54,13 +53,17 @@ public class LibraryTrackingClient implements Runnable {
         remoteClientOperator = new RemoteClientOperator();
     }
     
-    public static void showTimerFrame(String name) {
+    public static void showTimerFrame(String student) {
         if (timerFrame.isVisible()) {
-            timerFrame.setRegid(false);
+            timerFrame.setFrameRegisterID(false);
             timerFrame.resetAllFields();
             timerFrame.setVisible(false);
         }
         mainFrame.setMadBehaviour(false);
+        timerFrame.setStudentNumber(student);
+        //timerFrame.setAlertMinutes(mainFrame.getAlertMinutes());
+        timerFrame.startMinuteCounter();
+        timerFrame.setFrameRegisterID(true);
         timerFrame.setVisible(true);
     }
     

@@ -42,12 +42,16 @@ public class MainFrame extends JFrame implements WindowListener, WindowFocusList
         getContentPane().add(loginPanel, BorderLayout.EAST);
     }
 
+    /*public int getAlertMinutes() {
+        return loginPanel.getAlertMinutes();
+    }*/
+
     public void setMadBehaviour(boolean flag) {
         if (flag) {
             addWindowListener(this);
             addWindowFocusListener(this);
             setVisible(true);
-            requestFocus();
+            requestFocusInWindow();
             toFront();
         } else {
             removeWindowListener(this);
@@ -68,7 +72,7 @@ public class MainFrame extends JFrame implements WindowListener, WindowFocusList
         setVisible(true);
         addNotify();
         toFront();
-        requestFocus();
+        requestFocusInWindow();
         myDevice.setFullScreenWindow(this);
         setExtendedState(WindowEvent.WINDOW_DEICONIFIED);
         setExtendedState(Frame.MAXIMIZED_BOTH);
@@ -80,7 +84,7 @@ public class MainFrame extends JFrame implements WindowListener, WindowFocusList
         setVisible(true);
         addNotify();
         toFront();
-        requestFocus();
+        requestFocusInWindow();
         myDevice.setFullScreenWindow(this);
         setExtendedState(WindowEvent.WINDOW_DEICONIFIED);
         setExtendedState(Frame.MAXIMIZED_BOTH);
@@ -91,7 +95,7 @@ public class MainFrame extends JFrame implements WindowListener, WindowFocusList
         setVisible(true);
         addNotify();
         toFront();
-        requestFocus();
+        requestFocusInWindow();
         myDevice.setFullScreenWindow(this);
         setExtendedState(WindowEvent.WINDOW_DEICONIFIED);
         setExtendedState(Frame.MAXIMIZED_BOTH);
@@ -102,7 +106,7 @@ public class MainFrame extends JFrame implements WindowListener, WindowFocusList
         setVisible(true);
         addNotify();
         toFront();
-        requestFocus();
+        requestFocusInWindow();
         myDevice.setFullScreenWindow(this);
         setExtendedState(WindowEvent.WINDOW_DEICONIFIED);
         setExtendedState(Frame.MAXIMIZED_BOTH);
@@ -112,7 +116,7 @@ public class MainFrame extends JFrame implements WindowListener, WindowFocusList
     public void windowActivated(WindowEvent e) {
         addNotify();
         toFront();
-        requestFocus();
+        requestFocusInWindow();
         myDevice.setFullScreenWindow(this);
         setExtendedState(WindowEvent.WINDOW_DEICONIFIED);
         setExtendedState(Frame.MAXIMIZED_BOTH);
@@ -123,7 +127,7 @@ public class MainFrame extends JFrame implements WindowListener, WindowFocusList
         setVisible(true);
         addNotify();
         toFront();
-        requestFocus();
+        requestFocusInWindow();
         myDevice.setFullScreenWindow(this);
         setExtendedState(WindowEvent.WINDOW_DEICONIFIED);
         setExtendedState(Frame.MAXIMIZED_BOTH);
@@ -132,7 +136,7 @@ public class MainFrame extends JFrame implements WindowListener, WindowFocusList
     @Override
     public void windowGainedFocus(WindowEvent e) {
         setVisible(true);
-        requestFocus();
+        requestFocusInWindow();
         setExtendedState(Frame.MAXIMIZED_BOTH);
         setExtendedState(WindowEvent.WINDOW_DEICONIFIED);
         myDevice.setFullScreenWindow(this);
@@ -141,7 +145,7 @@ public class MainFrame extends JFrame implements WindowListener, WindowFocusList
     @Override
     public void windowLostFocus(WindowEvent e) {
         setVisible(true);
-        requestFocus();
+        requestFocusInWindow();
         setExtendedState(WindowEvent.WINDOW_DEICONIFIED);
         setExtendedState(Frame.MAXIMIZED_BOTH);
     }

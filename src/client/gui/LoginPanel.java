@@ -86,6 +86,16 @@ public class LoginPanel extends JPanel implements ActionListener {
         return true;
     }
 
+    /*public int getAlertMinutes() {
+        int i = ClientConfig.DEFAULT_LOGOFF;
+        try {
+            i = Integer.parseInt((String) alertTextCombo.getSelectedItem());
+        } catch (Exception exception) {
+            System.out.println((new StringBuilder()).append("Error: LoginPanel.getAlertMinutes(). ").append(exception).toString());
+        }
+        return i;
+    }*/
+
     private JLabel studentLabel;
     private JLabel passwordLabel;
     private JTextField studentField;
