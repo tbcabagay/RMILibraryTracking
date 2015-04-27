@@ -16,9 +16,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
 import java.awt.event.WindowListener;
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
 
 /**
  *
@@ -44,6 +47,10 @@ public class TimerFrame extends JFrame implements ActionListener, WindowListener
         JPanel container = new JPanel();
         container.setLayout(new BorderLayout());
 
+        Border border = BorderFactory.createEtchedBorder();
+        titledBorder = BorderFactory.createTitledBorder(border);
+        container.setBorder(titledBorder);
+
         timerDisplayPanel = new TimerDisplayPanel();
         passwordChangePanel = new PasswordChangePanel();
 
@@ -54,7 +61,6 @@ public class TimerFrame extends JFrame implements ActionListener, WindowListener
         container.add(timerDisplayPanel);
 
         getContentPane().add(container);
-        pack();
     }
 
     public static void autoLogoff() {
@@ -67,9 +73,18 @@ public class TimerFrame extends JFrame implements ActionListener, WindowListener
          ClientOpMain.showEntryWindow();
          }*/
     }
-    
+
     public void startMinuteCounter() {
         timerCounter.start();
+        titledBorder.setTitle(student);
+    }
+
+    public void stopMinuteCounter() {
+        timerCounter.stop();
+        minutes = 0;
+        hours = 0;
+        timerDisplayPanel.setTimerText((new StringBuilder()).append(hours).append(":").append(minutes).toString());
+        titledBorder.setTitle("");
     }
 
     public void setFrameRegisterID(boolean flag) {
@@ -85,10 +100,10 @@ public class TimerFrame extends JFrame implements ActionListener, WindowListener
     public void resetAllFields() {
         minutes = 0;
         hours = 0;
-        //timerDisplay.setTimerText("");
+        timerDisplayPanel.setTimerText("");
         student = "";
         setTitle((new StringBuilder()).append("Time> ").append(hours).append(":").append(minutes).toString());
-        //alertDialog.setVisible(false);
+        alertDialog.setVisible(false);
     }
 
     public String getStudentNumber() {
@@ -127,22 +142,22 @@ public class TimerFrame extends JFrame implements ActionListener, WindowListener
     @Override
     public void actionPerformed(ActionEvent e) {
         minutes++;
-        if(minutes >= 60)
-        {
+        if (minutes >= 60) {
             minutes = 0;
             hours++;
         }
         timerDisplayPanel.setTimerText((new StringBuilder()).append(hours).append(":").append(minutes).toString());
-        if(minutes >= alertMinutes - 1)
-        {
+        if (minutes >= alertMinutes - 1) {
             double d = minutes % (alertMinutes - 1);
-            if(d == 0.0D)
-            {
-                GraphicsDevice graphicsdevice = LibraryTrackingClient.getMyDevice();
+            if (d == 0.0D) {
+                GraphicsDevice graphicsDevice = LibraryTrackingClient.getMyDevice();
                 alertDialog.setMessage((new StringBuilder()).append("1 minute to").append(" ").append(hours).append(":").append(minutes + 1).toString());
-                alertDialog.setVisible(true);
-                graphicsdevice.setFullScreenWindow(alertDialog);
-                graphicsdevice.setFullScreenWindow(null);
+
+                try {
+                    graphicsDevice.setFullScreenWindow(alertDialog);
+                } finally {
+                    graphicsDevice.setFullScreenWindow(null);
+                }
             }
         }
         setTitle((new StringBuilder()).append("Time> ").append(hours).append(":").append(minutes).toString());
@@ -150,7 +165,7 @@ public class TimerFrame extends JFrame implements ActionListener, WindowListener
 
     @Override
     public void windowOpened(WindowEvent e) {
-        if(!isVisible()) {
+        if (!isVisible()) {
             setVisible(true);
             requestFocusInWindow();
         }
@@ -194,7 +209,7 @@ public class TimerFrame extends JFrame implements ActionListener, WindowListener
 
     @Override
     public void windowDeactivated(WindowEvent e) {
-        if(!isVisible()) {
+        if (!isVisible()) {
             setVisible(true);
             requestFocus();
         }
@@ -203,7 +218,7 @@ public class TimerFrame extends JFrame implements ActionListener, WindowListener
 
     @Override
     public void windowGainedFocus(WindowEvent e) {
-        if(!isVisible()) {
+        if (!isVisible()) {
             setVisible(true);
             setExtendedState(WindowEvent.WINDOW_DEICONIFIED);
         }
@@ -211,7 +226,7 @@ public class TimerFrame extends JFrame implements ActionListener, WindowListener
 
     @Override
     public void windowLostFocus(WindowEvent e) {
-        if(!isVisible()) {
+        if (!isVisible()) {
             setVisible(true);
         }
         setExtendedState(Frame.NORMAL);
@@ -226,4 +241,5 @@ public class TimerFrame extends JFrame implements ActionListener, WindowListener
     private TimerDisplayPanel timerDisplayPanel;
     private PasswordChangePanel passwordChangePanel;
     private AlertDialog alertDialog;
+    private TitledBorder titledBorder;
 }

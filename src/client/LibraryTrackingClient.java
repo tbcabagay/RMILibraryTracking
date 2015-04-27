@@ -20,65 +20,72 @@ import javax.swing.SwingUtilities;
  * @author tbcabagay
  */
 public class LibraryTrackingClient implements Runnable {
-    
+
     public LibraryTrackingClient() {
         GraphicsEnvironment myEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        myDevice = myEnvironment.getDefaultScreenDevice();
-        
+        LibraryTrackingClient.myDevice = myEnvironment.getDefaultScreenDevice();
+
         initConfig();
+        initRemoteConnection();
     }
-    
+
     @Override
     public void run() {
-        mainFrame = new MainFrame();
-        timerFrame = new TimerFrame();
-        myDevice.setFullScreenWindow(mainFrame);
-    }
-    
-    private void initConfig() {
-        properties = new Properties();
-        System.out.println("Reading client configuration.");
-        
+        LibraryTrackingClient.mainFrame = new MainFrame();
+        LibraryTrackingClient.timerFrame = new TimerFrame();
+
         try {
-            fileInputStream = new FileInputStream((new StringBuilder()).append("config").append(File.separator).append("client").append(File.separator).append("client.configuration.props").toString());
+            LibraryTrackingClient.myDevice.setFullScreenWindow(LibraryTrackingClient.mainFrame);
+        } catch (Exception ex) {
+            System.err.println("Error in " + LibraryTrackingClient.class.getName() + ": " + ex.toString());
+        }
+    }
+
+    private void initConfig() {
+        System.out.println("Reading client configuration.");
+
+        Properties properties = new Properties();
+
+        try {
+            FileInputStream fileInputStream = new FileInputStream((new StringBuilder()).append("config").append(File.separator).append("client").append(File.separator).append("client.configuration.props").toString());
             properties.load(fileInputStream);
         } catch (Exception ex) {
             System.err.println("Error in " + LibraryTrackingClient.class.getName() + ": " + ex.toString());
             System.exit(1);
         }
-        
+
         ClientConfigurationProps clientConfigurationProps = new ClientConfigurationProps(properties);
-        
+    }
+
+    private void initRemoteConnection() {
         System.out.println("Initializing remote connection.");
-        remoteClientOperator = new RemoteClientOperator();
+        RemoteClientOperator remoteClientOperator = new RemoteClientOperator();
     }
-    
+
     public static void showTimerFrame(String student) {
-        if (timerFrame.isVisible()) {
-            timerFrame.setFrameRegisterID(false);
-            timerFrame.resetAllFields();
-            timerFrame.setVisible(false);
+        if (LibraryTrackingClient.timerFrame.isVisible()) {
+            LibraryTrackingClient.timerFrame.setFrameRegisterID(false);
+            LibraryTrackingClient.timerFrame.resetAllFields();
+            LibraryTrackingClient.timerFrame.setVisible(false);
         }
-        mainFrame.setMadBehaviour(false);
-        timerFrame.setStudentNumber(student);
-        //timerFrame.setAlertMinutes(mainFrame.getAlertMinutes());
-        timerFrame.startMinuteCounter();
-        timerFrame.setFrameRegisterID(true);
-        timerFrame.setVisible(true);
+        LibraryTrackingClient.mainFrame.setMadBehaviour(false);
+        LibraryTrackingClient.timerFrame.setStudentNumber(student);
+        LibraryTrackingClient.timerFrame.setAlertMinutes(3);
+        LibraryTrackingClient.timerFrame.startMinuteCounter();
+        LibraryTrackingClient.timerFrame.pack();
+        LibraryTrackingClient.timerFrame.setFrameRegisterID(true);
+        LibraryTrackingClient.timerFrame.setVisible(true);
     }
-    
+
     public static GraphicsDevice getMyDevice() {
-        return myDevice;
+        return LibraryTrackingClient.myDevice;
     }
-    
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new LibraryTrackingClient());
     }
-    
+
     private static GraphicsDevice myDevice;
     private static MainFrame mainFrame;
     private static TimerFrame timerFrame;
-    private RemoteClientOperator remoteClientOperator;
-    private Properties properties;
-    private FileInputStream fileInputStream;
 }

@@ -48,7 +48,7 @@ public class AlertDialog extends JDialog implements ActionListener {
         UIGenHelper.addToGrid(container, continueButton, 0, 1, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE);
         UIGenHelper.addToGrid(container, logoutButton, 1, 1, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE);
         getContentPane().add(container);
-        // pack();
+        pack();
 
         continueButton.addActionListener(this);
         logoutButton.addActionListener(this);

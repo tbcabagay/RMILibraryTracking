@@ -33,8 +33,8 @@ public class TimerDisplayPanel extends JPanel implements ActionListener {
         add(logoutButton);
     }
 
-    public void setTimerText(String message) {
-        timerField.setText(message);
+    public void setTimerText(String time) {
+        timerField.setText(time);
         timerField.repaint();
         repaint();
     }
