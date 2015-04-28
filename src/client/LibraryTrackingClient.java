@@ -54,12 +54,12 @@ public class LibraryTrackingClient implements Runnable {
             System.exit(1);
         }
 
-        ClientConfigurationProps clientConfigurationProps = new ClientConfigurationProps(properties);
+        LibraryTrackingClient.clientConfigurationProps = new ClientConfigurationProps(properties);
     }
 
     private void initRemoteConnection() {
         System.out.println("Initializing remote connection.");
-        RemoteClientOperator remoteClientOperator = new RemoteClientOperator();
+        LibraryTrackingClient.remoteClientOperator = new RemoteClientOperator();
     }
 
     public static void showTimerFrame(String student) {
@@ -88,4 +88,6 @@ public class LibraryTrackingClient implements Runnable {
     private static GraphicsDevice myDevice;
     private static MainFrame mainFrame;
     private static TimerFrame timerFrame;
+    private static ClientConfigurationProps clientConfigurationProps;
+    private static RemoteClientOperator remoteClientOperator;
 }

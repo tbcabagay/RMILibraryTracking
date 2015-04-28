@@ -150,6 +150,7 @@ public class TimerFrame extends JFrame implements ActionListener, WindowListener
         if (minutes >= alertMinutes - 1) {
             double d = minutes % (alertMinutes - 1);
             if (d == 0.0D) {
+                System.out.println("d: " + d + " minutes: " + minutes + " alertMinutes: " + alertMinutes);
                 GraphicsDevice graphicsDevice = LibraryTrackingClient.getMyDevice();
                 alertDialog.setMessage((new StringBuilder()).append("1 minute to").append(" ").append(hours).append(":").append(minutes + 1).toString());
 

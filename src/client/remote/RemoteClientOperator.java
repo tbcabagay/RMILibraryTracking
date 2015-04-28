@@ -38,7 +38,6 @@ public class RemoteClientOperator {
             stub = (LibraryTrackingServerRemote) registry.lookup(ClientConfigurationProps.REMOTE_OBJECT_NAME);
         } catch (Exception ex) {
             System.err.println("Error in asd" + RemoteClientOperator.class.getName() + ": " + ex.toString());
-            ex.printStackTrace();
         }
     }
 

@@ -46,8 +46,8 @@ public class MainFrame extends JFrame implements WindowListener, WindowFocusList
         return loginPanel.getAlertMinutes();
     }*/
 
-    public void setMadBehaviour(boolean flag) {
-        if (flag) {
+    public void setMadBehaviour(boolean state) {
+        if (state) {
             addWindowListener(this);
             addWindowFocusListener(this);
             setVisible(true);
