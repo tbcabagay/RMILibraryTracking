@@ -13,7 +13,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -96,6 +95,11 @@ public class LoginPanel extends JPanel implements ActionListener {
             return false;
         }
         return true;
+    }
+
+    public void setErrorLabel(String message) {
+        errorLabel.setText(message);
+        errorLabel.repaint();
     }
 
     /*public int getAlertMinutes() {

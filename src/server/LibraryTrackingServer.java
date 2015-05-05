@@ -4,7 +4,7 @@
  */
 package server;
 
-import remote.LibraryTrackingServerRemote;
+import remote.LibraryTrackingRemote;
 import server.remote.ServerManager;
 import server.utilities.ServerConfigurationProps;
 import java.awt.EventQueue;
@@ -58,7 +58,7 @@ public class LibraryTrackingServer {
         try {
             System.out.print("Starting remote server...");
             serverManager = new ServerManager();
-            LibraryTrackingServerRemote stub = (LibraryTrackingServerRemote) UnicastRemoteObject.exportObject(serverManager, 0);
+            LibraryTrackingRemote stub = (LibraryTrackingRemote) UnicastRemoteObject.exportObject(serverManager, 0);
 
             Registry registry = LocateRegistry.getRegistry(ServerConfigurationProps.SERVER_NAME, Integer.parseInt(ServerConfigurationProps.SERVER_PORT));
             registry.rebind(ServerConfigurationProps.REMOTE_OBJECT_NAME, stub);

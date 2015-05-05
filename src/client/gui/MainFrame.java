@@ -34,18 +34,20 @@ public class MainFrame extends JFrame implements WindowListener, WindowFocusList
         setUndecorated(true);
         setSize(new Dimension((int) screenSize.getWidth(), (int) screenSize.getHeight()));
 
-        addWindowFocusListener(this);
-        addWindowListener(this);
-
+        //addWindowFocusListener(this);
+        //addWindowListener(this);
         loginPanel = new LoginPanel();
 
         getContentPane().add(loginPanel, BorderLayout.EAST);
     }
 
-    /*public int getAlertMinutes() {
-        return loginPanel.getAlertMinutes();
-    }*/
+    public void setErrorLabel(String message) {
+        loginPanel.setErrorLabel(message);
+    }
 
+    /*public int getAlertMinutes() {
+     return loginPanel.getAlertMinutes();
+     }*/
     public void setMadBehaviour(boolean state) {
         if (state) {
             addWindowListener(this);

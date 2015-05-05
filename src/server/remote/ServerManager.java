@@ -5,18 +5,23 @@
  */
 package server.remote;
 
-import remote.LibraryTrackingServerRemote;
+import remote.LibraryTrackingRemote;
 import server.database.Student;
 
 /**
  *
  * @author tbcabagay
  */
-public class ServerManager implements LibraryTrackingServerRemote {
+public class ServerManager implements LibraryTrackingRemote {
 
     @Override
-    public boolean doLogin(String username, String password) {
-        return Student.checkLogin(username, password);
+    public boolean doLogin(String student, String password, String clientIP) {
+        return Student.checkLogin(student, password);
+    }
+    
+    @Override
+    public boolean doLogout(String student, String clientIP) {
+        return false;
     }
     
 }

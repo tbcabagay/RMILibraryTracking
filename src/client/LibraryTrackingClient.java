@@ -77,6 +77,20 @@ public class LibraryTrackingClient implements Runnable {
         LibraryTrackingClient.timerFrame.setVisible(true);
     }
 
+    public static void showEntryWindow() {
+        LibraryTrackingClient.timerFrame.resetAllFields();
+        LibraryTrackingClient.timerFrame.stopMinuteCounter();
+        LibraryTrackingClient.timerFrame.setFrameRegisterID(false);
+        LibraryTrackingClient.timerFrame.setVisible(false);
+        if (!LibraryTrackingClient.timerFrame.isVisible()) {
+            LibraryTrackingClient.mainFrame.setMadBehaviour(true);
+        }
+    }
+
+    public static void setSessionMessage(String message) {
+        LibraryTrackingClient.mainFrame.setErrorLabel(message);
+    }
+
     public static GraphicsDevice getMyDevice() {
         return LibraryTrackingClient.myDevice;
     }

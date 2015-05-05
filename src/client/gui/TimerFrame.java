@@ -6,6 +6,7 @@
 package client.gui;
 
 import client.LibraryTrackingClient;
+import client.remote.RemoteClientOperator;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Frame;
@@ -32,10 +33,11 @@ public class TimerFrame extends JFrame implements ActionListener, WindowListener
     public TimerFrame() {
         this.screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
-        this.minutes = 0;
-        this.hours = 0;
+        TimerFrame.minutes = 0;
+        TimerFrame.hours = 0;
         this.timerCounter = new Timer(60000, this);
-        this.student = "";
+
+        TimerFrame.student = "";
 
         initComponents();
     }
@@ -54,8 +56,8 @@ public class TimerFrame extends JFrame implements ActionListener, WindowListener
         timerDisplayPanel = new TimerDisplayPanel();
         passwordChangePanel = new PasswordChangePanel();
 
-        timerDisplayPanel.setTimerText((new StringBuilder()).append(hours).append(":").append(minutes).toString());
-        setTitle((new StringBuilder()).append("Time> ").append(hours).append(":").append(minutes).toString());
+        timerDisplayPanel.setTimerText((new StringBuilder()).append(TimerFrame.hours).append(":").append(TimerFrame.minutes).toString());
+        setTitle((new StringBuilder()).append("Time> ").append(TimerFrame.hours).append(":").append(TimerFrame.minutes).toString());
         alertDialog = new AlertDialog(this);
 
         container.add(timerDisplayPanel);
@@ -64,26 +66,25 @@ public class TimerFrame extends JFrame implements ActionListener, WindowListener
     }
 
     public static void autoLogoff() {
-        /*String s = RemoteClientOperator.requestLogout(userId);
-         if (s.equals("true")) {
-         ClientOpMain.setSessionMsg((new StringBuilder()).append("Last Session Duration:").append(getTimeDuration()).toString());
-         ClientOpMain.showEntryWindow();
-         } else {
-         ClientOpMain.setSessionMsg((new StringBuilder()).append("Last Session Duration: ").append(getTimeDuration()).append("Error:").append(s).toString());
-         ClientOpMain.showEntryWindow();
-         }*/
+        String response = RemoteClientOperator.requestLogout(TimerFrame.student);
+        if (response.equals("true")) {
+            LibraryTrackingClient.setSessionMessage((new StringBuilder()).append("Last Session Duration: ").append(getTimeDuration()).toString());
+        } else {
+            LibraryTrackingClient.setSessionMessage((new StringBuilder()).append("Last Session Duration: ").append(getTimeDuration()).append("Error: ").append(response).toString());
+        }
+        LibraryTrackingClient.showEntryWindow();
     }
 
     public void startMinuteCounter() {
         timerCounter.start();
-        titledBorder.setTitle(student);
+        titledBorder.setTitle(TimerFrame.student);
     }
 
     public void stopMinuteCounter() {
         timerCounter.stop();
-        minutes = 0;
-        hours = 0;
-        timerDisplayPanel.setTimerText((new StringBuilder()).append(hours).append(":").append(minutes).toString());
+        TimerFrame.minutes = 0;
+        TimerFrame.hours = 0;
+        timerDisplayPanel.setTimerText((new StringBuilder()).append(TimerFrame.hours).append(":").append(TimerFrame.minutes).toString());
         titledBorder.setTitle("");
     }
 
@@ -98,37 +99,37 @@ public class TimerFrame extends JFrame implements ActionListener, WindowListener
     }
 
     public void resetAllFields() {
-        minutes = 0;
-        hours = 0;
+        TimerFrame.minutes = 0;
+        TimerFrame.hours = 0;
         timerDisplayPanel.setTimerText("");
-        student = "";
-        setTitle((new StringBuilder()).append("Time> ").append(hours).append(":").append(minutes).toString());
+        TimerFrame.student = "";
+        setTitle((new StringBuilder()).append("Time> ").append(TimerFrame.hours).append(":").append(TimerFrame.minutes).toString());
         alertDialog.setVisible(false);
     }
 
     public String getStudentNumber() {
-        return student;
+        return TimerFrame.student;
     }
 
     public void setStudentNumber(String student) {
-        this.student = student;
-        timerDisplayPanel.setStudentNumber(student);
+        TimerFrame.student = student;
+        timerDisplayPanel.setStudentNumber(TimerFrame.student);
     }
 
     public int getMinutes() {
-        return minutes;
+        return TimerFrame.minutes;
     }
 
     public void setMinutes(int minutes) {
-        this.minutes = minutes;
+        TimerFrame.minutes = minutes;
     }
 
     public int getHours() {
-        return hours;
+        return TimerFrame.hours;
     }
 
     public void setHours(int hours) {
-        this.hours = hours;
+        TimerFrame.hours = hours;
     }
 
     public int getAlertMinutes() {
@@ -139,20 +140,24 @@ public class TimerFrame extends JFrame implements ActionListener, WindowListener
         this.alertMinutes = alertMinutes;
     }
 
+    public static String getTimeDuration() {
+        return (new StringBuilder()).append(TimerFrame.hours).append(":").append(TimerFrame.minutes).toString();
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        minutes++;
-        if (minutes >= 60) {
-            minutes = 0;
-            hours++;
+        TimerFrame.minutes++;
+        if (TimerFrame.minutes >= 60) {
+            TimerFrame.minutes = 0;
+            TimerFrame.hours++;
         }
-        timerDisplayPanel.setTimerText((new StringBuilder()).append(hours).append(":").append(minutes).toString());
-        if (minutes >= alertMinutes - 1) {
-            double d = minutes % (alertMinutes - 1);
+        timerDisplayPanel.setTimerText((new StringBuilder()).append(TimerFrame.hours).append(":").append(TimerFrame.minutes).toString());
+        if (TimerFrame.minutes >= alertMinutes - 1) {
+            double d = TimerFrame.minutes % (alertMinutes - 1);
             if (d == 0.0D) {
-                System.out.println("d: " + d + " minutes: " + minutes + " alertMinutes: " + alertMinutes);
+                System.out.println("d: " + d + " TimerFrame.minutes: " + TimerFrame.minutes + " alertMinutes: " + alertMinutes);
                 GraphicsDevice graphicsDevice = LibraryTrackingClient.getMyDevice();
-                alertDialog.setMessage((new StringBuilder()).append("1 minute to").append(" ").append(hours).append(":").append(minutes + 1).toString());
+                alertDialog.setMessage((new StringBuilder()).append("1 minute to").append(" ").append(TimerFrame.hours).append(":").append(TimerFrame.minutes + 1).toString());
 
                 try {
                     graphicsDevice.setFullScreenWindow(alertDialog);
@@ -161,7 +166,7 @@ public class TimerFrame extends JFrame implements ActionListener, WindowListener
                 }
             }
         }
-        setTitle((new StringBuilder()).append("Time> ").append(hours).append(":").append(minutes).toString());
+        setTitle((new StringBuilder()).append("Time> ").append(TimerFrame.hours).append(":").append(TimerFrame.minutes).toString());
     }
 
     @Override
@@ -233,9 +238,9 @@ public class TimerFrame extends JFrame implements ActionListener, WindowListener
         setExtendedState(Frame.NORMAL);
     }
 
-    private String student;
-    private int minutes;
-    private int hours;
+    private static String student;
+    private static int minutes;
+    private static int hours;
     private int alertMinutes;
     private final Timer timerCounter;
     private final Dimension screenSize;
